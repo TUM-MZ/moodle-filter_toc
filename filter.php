@@ -69,7 +69,7 @@ class filter_toc extends moodle_text_filter {
           $heading_text .= $child->nodeValue;
       }
       
-      $to_add = '<a name="[ID]" id="[ID]"></a><a href="#toc"><span class="toc_link" style="color: #ff6600;">  (top)</span></a>';
+      $to_add = '<a name="[ID]" id="[ID]"></a><a href="#toc"><span class="toc_link" style="color: #ff6600;"> '.get_string('toc_top', 'filter_toc').'</span></a>';
       
       $link_name = str_replace(" ", "_", $heading_text);
       foreach (array("&amp;", "!", "#", "(", ")", ".", ":", ";", "-", "\"", "'") as $to_remove)
@@ -138,8 +138,8 @@ class filter_toc extends moodle_text_filter {
       $text = str_replace("&#13;", "", $text);
       
       $this->adjust_tag_level(0);
-      $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>Inhaltsverzeichnis</h1>' . $this->toc_text .'</div>';
-
+      // $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>Inhaltsverzeichnis</h1>' . $this->toc_text .'</div>';
+      $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>'.get_string('toc_index', 'filter_toc').'</h1>' . $this->toc_text .'</div>';
       $insert_at = stripos($text, "[contents]");
 
       if ($insert_at) {

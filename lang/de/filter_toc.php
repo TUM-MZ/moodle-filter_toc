@@ -28,5 +28,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['filtername'] = 'Table of Contents Generator';
-$string['toc_index']  = 'Index of Contents';
-$string['toc_top']    = ' (top)';
+$string['toc_index']  = 'Inhaltsverzeichnis';
+$string['toc_top']    = ' (nach oben)';
