@@ -80,6 +80,10 @@ class filter_toc extends moodle_text_filter {
       $fragment = $domDocument->createDocumentFragment();
       $fragment->appendXML(substr($old_contents, 0, strlen($old_contents) - 5) ."{$to_add}</h{$heading_level}>");
       $heading_instance->parentNode->replaceChild($fragment, $heading_instance);
+
+      if($heading_level==1) {
+        $heading_text = "<h2>".$heading_text."</h2>";
+      }
       
       // Add this tag to the table of contents text
       $this->adjust_tag_level($heading_level);    
@@ -138,7 +142,6 @@ class filter_toc extends moodle_text_filter {
       $text = str_replace("&#13;", "", $text);
       
       $this->adjust_tag_level(0);
-      // $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>Inhaltsverzeichnis</h1>' . $this->toc_text .'</div>';
       $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>'.get_string('toc_index', 'filter_toc').'</h1>' . $this->toc_text .'</div>';
       $insert_at = stripos($text, "[contents]");
 

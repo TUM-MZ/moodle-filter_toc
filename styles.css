@@ -1,0 +1,8 @@
+.generalbox .toc>ul>li {
+	list-style: none;
+	margin:0;
+}
+
+.generalbox .toc ul>li h2 {
+	margin-bottom: 0;
+}
