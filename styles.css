@@ -3,11 +3,6 @@
         margin:0;
 }
 
-.generalbox .toc>ul>li>a {
-        display: inline-block;
-        margin-left: 4px;
-}
-
 .generalbox .toc ul>li h2 {
 	margin-bottom: 0;
 }

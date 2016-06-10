@@ -81,13 +81,14 @@ class filter_toc extends moodle_text_filter {
       $fragment->appendXML(substr($old_contents, 0, strlen($old_contents) - 5) ."{$to_add}</h{$heading_level}>");
       $heading_instance->parentNode->replaceChild($fragment, $heading_instance);
 
-      if($heading_level==1) {
-        $heading_text = "<h2>".$heading_text."</h2>";
-      }
-      
       // Add this tag to the table of contents text
       $this->adjust_tag_level($heading_level);    
-      $this->toc_text .= "<li><a href='#" . $link_name . "'>" . $heading_text . "</a></li>\n";
+
+      if($heading_level==1) {
+        $this->toc_text .= "<li><h2><a href='#" . $link_name . "'>" . $heading_text . "</a></h2></li>\n";
+      } else {
+        $this->toc_text .= "<li><a href='#" . $link_name . "'>" . $heading_text . "</a></li>\n";
+      }
     }
 
     private function adjust_tag_level($this_level)
@@ -108,9 +109,6 @@ class filter_toc extends moodle_text_filter {
       if ($PAGE->pagelayout <> "incourse")
         return $text;
 
-      $next_tag_pos = 0;
-      $toc_text = "";
-      $last_level = 0;
       $num_entries = 0;
 
       libxml_use_internal_errors(true);
@@ -134,15 +132,15 @@ class filter_toc extends moodle_text_filter {
 
       if ($num_entries < 2)
         return $text;
+
       
       $text = preg_replace('/^<!DOCTYPE.+?>/', '', str_replace( array('<html>', '</html>', '<body>', '</body>'), array('', '', '', ''), $dom->saveHTML()));
-
+      
       # Converting $text to Doc and back can introduce some rubbish that confused Firefox during testing
       $text = str_replace("<strong/>", "", $text);
       $text = str_replace("&#13;", "", $text);
-      
-      $this->adjust_tag_level(0);
-      $this->toc_text = '<div class="toc"><a name="toc" id="toc" /><h1>'.get_string('toc_index', 'filter_toc').'</h1>' . $this->toc_text .'</div>';
+
+      $this->toc_text = '<div class="toc"><a name="toc" id="toc"></a><h1>'.get_string('toc_index', 'filter_toc').'</h1>' . $this->toc_text .'</div>';
       $insert_at = stripos($text, "[contents]");
 
       if ($insert_at) {
